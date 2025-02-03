@@ -1,0 +1,8 @@
+POST http://localhost:3000/questions
+Content-Type: application/json
+
+{
+  "title": "Como fazer uma pergunta?",
+  "description": "Estou com dúvida sobre como fazer uma pergunta no site. Alguém pode me ajudar?",
+  "tags": ["pergunta", "ajuda", "ajuda"]
+}

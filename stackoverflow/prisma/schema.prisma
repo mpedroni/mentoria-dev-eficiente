@@ -1,0 +1,37 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id Int @id @default(autoincrement())
+
+  Question Question[]
+
+  @@map("users")
+}
+
+model Tag {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  Questions Question[]
+
+  @@index([name])
+  @@map("tags")
+}
+
+model Question {
+  id          Int      @id @default(autoincrement())
+  userId      Int      @map("user_id")
+  title       String
+  description String
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  User User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tags Tag[]
+}

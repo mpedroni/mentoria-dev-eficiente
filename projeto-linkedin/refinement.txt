@@ -1,0 +1,89 @@
+[Requisitos do Sistema](https://gist.github.com/asouza/82cf185646f63b83e0639e2c54acb1cf)
+
+assumptions:
+  - para os requisitos atuais acho que um banco relacional funciona bem
+
+# story: cadastro de membro
+dúvidas:
+  - tudo no mesmo endpoint/processo? 
+  - quais dados são obrigatórios?
+  - nas experiências, referenciar as páginas das empresas cadastradas?
+
+input: 
+  - informações sobre perfil básico (? quais informações?)
+    - nome, email, descrição
+  - experiências (? infos em uma experiência?)
+    - empresa
+      - ?somente nome ou precisa ser relacionável com as empresas já cadastradas no sistema?
+      - ?se a empresa não estiver cadastrada?
+    - cargo
+    - localidade
+    - descrição
+    - data início 
+    - data fim
+  - educação (? quais informações?)
+    - instituição (?mesma pergunta sobre a empresa)
+    - curso
+    - nível
+    - titulação
+      - técnico, graduação, especialização, mestrado, doutorado
+  - habilidades (? quais informações?)
+    - nome
+    - (?vai precisar ser ordenável pelo usuário? se sim, precisa de um `order`)
+  - realizações (? quais informações?) (?o que é uma realização)
+    - titulo
+    - descrição
+    - data
+
+
+# story: busca por empresas e usuários
+dúvidas:
+  - deve haver algum tipo de opt-out?
+
+input:
+  - nome
+
+output: 
+  - lista de empresas e usuários que batem com o nome
+    - (?critérios pra busca (full-text search, busca "dummy"...))
+    - (?o que precisará ser mostrado sobre cada item?)
+
+
+# story: enviar conexão para membros
+dúvidas:
+  - limite de conexões em aberto e/ou totais?
+
+restrições:
+  - não pode enviar conexão para membros já conectados
+
+
+# story: aceitar conexão para membros
+dúvidas:
+  - rejeitar é possível? Entra no escopo dessa story?
+
+
+# story: solicitar recomendação
+
+
+# story: estatísticas de perfil (talvez valha quebrar em mais stories)
+dúvidas:
+  - precisamos saber de algo além dos números em si, como as pessoas que pesquisaram/viram o perfil, etc
+
+- número de visualizações do perfil (preciso pensar melhor em como fazer isso)
+- número total de conexões
+- número total de aparição nas buscas (preciso pensar melhor em como fazer isso)
+
+# story: criar postagens para suas conexões (membros) (?empresas não terão essa feature?)
+# story: comentar uma postagem
+# story: curtir uma postagem ou comentário
+# story: compartilhar uma postagem ou comentário (?compartilhar comentários?)
+# story: compartilhar postagem, comen
+# story: enviar mensagens para outros membros (?apenas conexões? como evitar spam ou msg indesejada?)
+# story: notificação de mensagem
+# story: notificação de convite de conexão
+# story: notificação de comentário em postagem própria (?comentários de comentários ou curtidas não?)
+# story: criar página para empresa (?algum limite de empresas por membros?) (?quais dados são necessários?)
+# story: adicionar anúncio de vagas em empresas
+# story: criar grupos
+# story: ingressar em grupos (?pode precisar de aprovação?) (?o aprovador é o criador do grupo?) (?conceito de admin precisa pra agora?)
+# story: membros podem seguir outros membros e empresas (?qual a diferença de seguir e conectar?)

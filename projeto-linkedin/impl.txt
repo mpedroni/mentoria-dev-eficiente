@@ -1,0 +1,12 @@
+- inciar o projeto
+- instalar fiber
+- instalar migrate
+- instalar sqlc
+
+
+-- cadastro de membro
+- criar handler
+- criar struct para receber os dados
+- adicionar validação
+  - ver se os erros ficam muito bizarros e se dá pra deixar assim
+- 

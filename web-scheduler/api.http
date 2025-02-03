@@ -1,0 +1,12 @@
+# schedule a new job
+POST http://localhost:8080/jobs
+Content-Type: application/json
+
+{
+  "method": "POST",
+  "payload": "{\"name\": \"John\", \"age\": 30}",
+  "code": "johndoe",
+  "url": "https://api.example.com",
+  "start_message": "started johdoe job",
+  "end_message": "finished johndoe job"
+}

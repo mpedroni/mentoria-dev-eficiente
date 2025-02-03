@@ -1,0 +1,58 @@
+## o que é necessário fazer?
+
+o sistema deve receber uma lista de eventos (cli, http, arquivo, json...) de propostas de financiamento.
+Cada evento tem um conjunto de campos em comum e campos variáveis de acordo com o tipo do evento.
+campos em comum: <id_do_evento>,<tipo_do_evento>,<ação>,<timestamp>,<id_da_proposta>,<dados_variáveis>
+
+ao final do programa, o sistema deve informa quais são as propostas válidas e inválidas
+
+os tipos de evento são: proposal, warranty e proponent
+
+proposal (criação): representa a criação de uma proposta (a princípio não há evento de encerramento/cancelamento)
+campos: <id_do_evento>,proposal,created,<timestamp>,<id_da_proposta>,<valor_solicitado>,<prazo_em_meses>
+
+warranty (adição): representa a inclusão de um item como garantia ao financiamento
+campos: <id_do_evento>,warranty,added,<timestamp>,<id_da_proposta>,<id_da_garantia>,<valor_garantia>,<estado>
+
+proponent: adiciona um proponente a proposta
+campos: <id_do_evento>,proponent,added,<timestamp>,<id_da_proposta>,<id_do_proponente>,<nome>,<idade>,<salario>,<principal>
+
+validações:
+    - um e apenas um proponente principal
+    - o proponente deve ser maior de 18 anos
+    - salario mensal proponente principal deve ser maior ou igual a parcela mensal do financiamento
+      - parcela mensal = valor/prazo
+    - valor garantias pelo menos o dobro do valor solicitado
+    - pelo menos 2 proponentes
+
+
+## PLANO DE IMPLEMENTAÇÃO
+
+- prop reader
+
+- leitor de arquivos (fs prop reader)
+  - ler o arquivo do fs
+  - retorna em uma lista de proposals
+- proposal validator
+  - recebe um proposal e agrupa as validações
+
+## PASSO A PASSO DE IMPLEMENTAÇÃO
+- main
+  - (depois) receber file name como args do comando
+  - criar fs proposal reader
+  - instancia cli
+  - cli.Run
+- cli
+  - roda o fs proposal reader
+  - printa os proposals inválidos
+- criar fs proposal reader que retorna a lista de proposals
+
+
+## DÚVIDAS
+
+- um arquivo por vez?
+- regras de processamento expansíveis
+
+- deveria encapsular o processamento da cada linha?
+
+  

@@ -1,0 +1,58 @@
+# story: postar uma nova pergunta
+
+! não fazer a autenticação agora. Ela será incluída posteriormente e deve ter o mínimo impacto no código existente
+
+-------------------- primeira iteração ---------------------------------
+- criar um controller (POST /questions)
+  - body
+    - title
+      - max 150
+    - description 
+      - suporte a formatação (markdown?)
+      ? pode gerar problemas de injection?
+    - tags
+  - token de autenticação (header)
+- validar se o usuário está autenticado e retorna os dados do usuário
+  - criar uma interface Authenticator e criar uma implementação dummy
+- se usuário não autenticado, retorna 401
+- validar dados de entrada
+
+thoughts: 
+- não foi uma escolha feliz definir os passos de validar e autenticar o usuário, tampouco a interface de Authenticator. Qualquer framework de autenticação já lidaria com isso, e o usuário seria injetado no contexto da requisição de alguma forma
+
+
+-------------------- segunda iteração ---------------------------------
+- criar um controller (POST /questions)
+  - body
+    - title
+      - max 150
+    - description 
+      - suporte a formatação (markdown?)
+      ? tamanho máximo?
+      ? pode gerar problemas de injection?
+    - tags
+      - 5 tags por pergunta
+      - escolher existentes OU criar novas
+- usuário estará disponível na request OU obtido via parâmetro no método
+- validar dados de entrada
+  - zod
+- criar pergunta
+  - novas classes: pergunta e tag (id e title)
+  - pergunta contém uma lista de tags
+    - dá de usar um set baseado no title da tag
+- salvar pergunta no DB (transaction única? race conditions?)
+  - adicionar constraints nas colunas da tabela
+  ? pergunta ficará como "Aberta". Deverão ter mais estados, tipo "Não publicado"? Me preocupo com isso agora?
+  - salvar as tags
+    - criar tabela de tags
+      - unique constraint no title (assumindo que não podem haver tags repetidas)
+      - índex no title
+    - tabela pivô para perguntas/tags
+      - index no id de pergunta
+- indexa pergunta de forma assíncrona
+  - acho que uma promise resolve. Se precisar de retry é mais complexo (pensar depois)
+- retorna 201
+
+test cases:
+- 
+    

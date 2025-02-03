@@ -1,0 +1,33 @@
+Backend Software Engineer Sênior
+
+-- ! pergunta: como definir objetivos para tópicos abertos mesmo? (design de código, testes...)
+
+- OK tópicos genéricos (design, testes)
+- !! aws
+- ! escalabilidade e resiliência
+- ! participação em decisões de produto (eng de requisitos?)
+- ! analise de sistemas em produção (monit, e observab.)
+- OK oop
+- ! fp
+- sistemas distribuídos
+  - OK microservices
+  - ! concorrência entre MS
+- ! segurança
+- OK db relacional
+- ! nosql
+- ! filas e comunicação assíncrona
+- OK linux, ! iac, ! k8s, OK docker ou ! kafka
+
+---------------------
+ganhar consciência: AWS
+recursos:
+  - https://aws.amazon.com/getting-started/cloud-essentials (conceitos de cloud no geral)
+  - https://aws.amazon.com/getting-started/onboarding-to-aws/
+  - https://aws.amazon.com/getting-started/guides/setup-environment/
+
+  - https://explore.skillbuilder.aws/learn/public/learning_plan/view/84/developer-learning-plan?
+  - https://aws.amazon.com/sqs/ + getting started
+  - https://aws.amazon.com/sns/
+  - https://docs.aws.amazon.com/sns/latest/dg/sns-getting-started.html
+  - https://aws.amazon.com/dynamodb
+  - https://aws.amazon.com/dynamodb/getting-started

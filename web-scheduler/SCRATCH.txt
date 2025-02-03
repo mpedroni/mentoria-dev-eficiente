@@ -1,0 +1,25 @@
+-- endpoint para criar um job
+
+- OK cria endpoint POST /jobs
+- OK cria struct para body
+    method: GET | POST
+    payload: any
+    code: string?, unique
+    url: string
+    start_message: string
+    end_message: string
+- OK validar struct
+- OK criar repo
+- OK criar struct de job
+  - id 
+  - method
+  - payload (byte[], string)
+  - code (unique)
+  - url
+  - start_message
+  - end_message
+  - attempts
+  - created_at
+  - done
+- OK criar job
+- OK salvar no banco
