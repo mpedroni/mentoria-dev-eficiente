@@ -1,0 +1,5 @@
+event_1,proposal,created,2019-11-11T14:28:01Z,prop_1,1141424.0,240
+event_2,warranty,added,2019-11-11T14:28:01Z,prop_1,warranty_1,3245356.0,DF
+event_3,warranty,added,2019-11-11T14:28:01Z,prop_1,warranty_2,3413113.45,DF
+event_4,proponent,added,2019-11-11T14:28:01Z,prop_1,proponent_1,Ismael Streich Jr.,42,62615.64,true
+event_5,proponent,added,2019-11-11T14:28:01Z,prop_1,proponent_2,Mrs. Peter Wisozk,41,67745.71,false
