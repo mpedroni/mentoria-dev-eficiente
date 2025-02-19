@@ -1,0 +1,14 @@
+como melhor o seguinte código de modo que facilite a modificação e adição de regras para proposta de empréstimo?
+https://github.com/dead-parrot/BCredi-challenge/blob/master/BCredi/Entities/Loan.cs
+
+(no meu código, poderia ter um novo nível de abstração de Loan. Nesse caso, faria sentido criar propostas com proponentes/warranties inválidas)
+
+- remover os return null e devolver um error significativo
+- criar classe Proposal com as lógicas encapsuladas:
+  - soma dos valores das garantias
+  - buscar o proponente principal
+    ? se não tiver um proponente principal, retorna erro? (a ordem das validações faria diferença)
+  - quantidade de proponentes
+
+- no construtor o Loan, receber a proposal e uma lista de options. Cada option recebe a proposal e retorna um erro. 
+  - 
