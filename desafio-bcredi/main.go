@@ -1,17 +1,14 @@
 package main
 
 func main() {
-	// f, err := os.Open("./proposals/example001.txt")
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// defer f.Close()
+	fsProposalReader, err := NewFileSystemProposalReader("./proposals/example002.txt")
+	if err != nil {
+		panic(err)
+	}
 
-	// fsProposalReader := NewFileSystemProposalReader(f)
+	cli := NewCLI(fsProposalReader)
 
-	// cli := NewCLI(fsProposalReader)
-
-	// if err := cli.Run(); err != nil {
-	// 	panic(err)
-	// }
+	if err := cli.Run(); err != nil {
+		panic(err)
+	}
 }

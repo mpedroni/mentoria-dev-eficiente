@@ -18,12 +18,12 @@ proponent: adiciona um proponente a proposta
 campos: <id_do_evento>,proponent,added,<timestamp>,<id_da_proposta>,<id_do_proponente>,<nome>,<idade>,<salario>,<principal>
 
 validações:
-    - um e apenas um proponente principal
-    - o proponente deve ser maior de 18 anos
-    - salario mensal proponente principal deve ser maior ou igual a parcela mensal do financiamento
+    - OK um e apenas um proponente principal
+    - OK o proponente principal deve ser maior de 18 anos
+    - OK salario mensal proponente principal deve ser maior ou igual a parcela mensal do financiamento
       - parcela mensal = valor/prazo
-    - valor garantias pelo menos o dobro do valor solicitado
-    - pelo menos 2 proponentes
+    - OK pelo menos 2 proponentes
+    - OK valor garantias pelo menos o dobro do valor solicitado
 
 
 ## PLANO DE IMPLEMENTAÇÃO
