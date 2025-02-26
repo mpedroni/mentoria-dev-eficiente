@@ -31,7 +31,7 @@ const (
 )
 
 type ProposalReader interface {
-	Read() ([]ProposalReaderResponse, error)
+	Read() ([]Proposal, error)
 }
 
 type fsProposalReader struct {
@@ -43,14 +43,6 @@ type ProposalReaderResponse struct {
 	Err error
 }
 
-type proposalData struct {
-	proposalID       string
-	requiredValue    float64
-	deadlineInMonths int
-	warranties       []Warranty
-	proponents       []Proponent
-}
-
 func NewFileSystemProposalReader(filename string) (ProposalReader, error) {
 	content, err := os.ReadFile(filename)
 	if err != nil {
@@ -60,9 +52,8 @@ func NewFileSystemProposalReader(filename string) (ProposalReader, error) {
 	return &fsProposalReader{content: string(content)}, nil
 }
 
-func (r *fsProposalReader) Read() ([]ProposalReaderResponse, error) {
-	proposals := make([]ProposalReaderResponse, 0)
-	pdata := make([]*proposalData, 0)
+func (r *fsProposalReader) Read() ([]Proposal, error) {
+	proposals := make([]*Proposal, 0)
 
 	for n, line := range strings.Split(r.content, "\n") {
 		fields := strings.Split(line, ",")
@@ -71,26 +62,30 @@ func (r *fsProposalReader) Read() ([]ProposalReaderResponse, error) {
 
 		switch eventType {
 		case "proposal,created":
-			pd := &proposalData{}
-			pd.proposalID = fields[ProposalID]
+			proposalID := fields[ProposalID]
 
 			valueAsString := fields[RequiredValue]
 			value, err := strconv.ParseFloat(valueAsString, 64)
 			if err != nil {
 				return nil, err
 			}
-			pd.requiredValue = value
+			requiredValue := value
 
 			deadlineAsString := fields[DeadlineInMonths]
 			deadline, err := strconv.Atoi(deadlineAsString)
 			if err != nil {
 				return nil, err
 			}
-			pd.deadlineInMonths = deadline
+			deadlineInMonths := deadline
 
-			pdata = append(pdata, pd)
+			proposal := NewProposal(proposalID, requiredValue, deadlineInMonths)
+			proposals = append(
+				proposals,
+				&proposal,
+			)
+
 		case "warranty,added":
-			if len(pdata) == 0 {
+			if len(proposals) == 0 {
 				return nil, fmt.Errorf("warranty added before proposal created at line: %v", n+1)
 			}
 			id := fields[WarrantyID]
@@ -102,10 +97,10 @@ func (r *fsProposalReader) Read() ([]ProposalReaderResponse, error) {
 				return nil, err
 			}
 
-			pd := pdata[len(pdata)-1]
-			pd.warranties = append(pd.warranties, NewWarranty(id, pd.proposalID, price, province))
+			proposal := proposals[len(proposals)-1]
+			proposal.AddWarranty(NewWarranty(id, proposal.ID, price, province))
 		case "proponent,added":
-			if len(pdata) == 0 {
+			if len(proposals) == 0 {
 				return nil, fmt.Errorf("proponent added before proposal created at line: %v", n+1)
 			}
 
@@ -129,18 +124,17 @@ func (r *fsProposalReader) Read() ([]ProposalReaderResponse, error) {
 				return nil, err
 			}
 
-			pd := pdata[len(pdata)-1]
-			pd.proponents = append(pd.proponents, NewProponent(id, pd.proposalID, name, age, income, isMain))
+			proposal := proposals[len(proposals)-1]
+			proposal.AddProponent(NewProponent(id, proposal.ID, name, age, income, isMain))
 		default:
 			return nil, fmt.Errorf("unknown event type: %s", eventType)
 		}
 	}
 
-	for _, pd := range pdata {
-		var res ProposalReaderResponse
-		res.Proposal, res.Err = NewProposal(pd.proposalID, pd.requiredValue, pd.deadlineInMonths, pd.warranties, pd.proponents)
-		proposals = append(proposals, res)
+	pp := make([]Proposal, len(proposals))
+	for i, p := range proposals {
+		pp[i] = *p
 	}
 
-	return proposals, nil
+	return pp, nil
 }

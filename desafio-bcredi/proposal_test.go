@@ -18,14 +18,18 @@ func TestProposal_Proponent(t *testing.T) {
 			NewProponent("proponent_2", "prop_1", "Arlene Kassulke", 36, 48925.52, false),
 		}
 
-		proposal, err := NewProposal("prop_1", 1141424., 240, warranties, proponents)
+		sut := NewProposal("prop_1", 1141424., 240)
+		sut.AddWarranty(warranties[0])
+		sut.AddWarranty(warranties[1])
+		sut.AddProponent(proponents[0])
+		sut.AddProponent(proponents[1])
 
-		assert.Nil(t, err)
-		assert.Equal(t, "prop_1", proposal.ID)
-		assert.Equal(t, 1141424., proposal.RequiredValue())
-		assert.Equal(t, 240, proposal.DeadlineInMonths())
-		assert.Len(t, proposal.Warranties(), 2)
-		assert.Len(t, proposal.Proponents(), 2)
+		assert.Nil(t, sut.SelfValidate())
+		assert.Equal(t, "prop_1", sut.ID)
+		assert.Equal(t, 1141424., sut.RequiredValue())
+		assert.Equal(t, 240, sut.DeadlineInMonths())
+		assert.Len(t, sut.Warranties(), 2)
+		assert.Len(t, sut.Proponents(), 2)
 	})
 
 	t.Run("should return error when there aren't a main proponent", func(t *testing.T) {
@@ -34,9 +38,13 @@ func TestProposal_Proponent(t *testing.T) {
 			NewProponent("proponent_2", "prop_1", "Arlene Kassulke", 36, 48925.52, false),
 		}
 
-		_, err := NewProposal("prop_1", 1141424., 240, warranties, proponents)
+		sut := NewProposal("prop_1", 1141424., 240)
+		sut.AddWarranty(warranties[0])
+		sut.AddWarranty(warranties[1])
+		sut.AddProponent(proponents[0])
+		sut.AddProponent(proponents[1])
 
-		assert.ErrorIs(t, err, ErrMainProponentNotFound)
+		assert.ErrorIs(t, sut.SelfValidate(), ErrMainProponentNotFound)
 	})
 
 	t.Run("should return error when there are more than one main proponent", func(t *testing.T) {
@@ -45,9 +53,13 @@ func TestProposal_Proponent(t *testing.T) {
 			NewProponent("proponent_2", "prop_1", "Arlene Kassulke", 36, 48925.52, true),
 		}
 
-		_, err := NewProposal("prop_1", 1141424., 240, warranties, proponents)
+		sut := NewProposal("prop_1", 1141424., 240)
+		sut.AddWarranty(warranties[0])
+		sut.AddWarranty(warranties[1])
+		sut.AddProponent(proponents[0])
+		sut.AddProponent(proponents[1])
 
-		assert.ErrorIs(t, err, ErrInvalidNumberOfMainProponents)
+		assert.ErrorIs(t, sut.SelfValidate(), ErrInvalidNumberOfMainProponents)
 	})
 
 	t.Run("should return error when the main proponent is underage", func(t *testing.T) {
@@ -56,9 +68,13 @@ func TestProposal_Proponent(t *testing.T) {
 			NewProponent("proponent_2", "prop_1", "Arlene Kassulke", 36, 48925.52, false),
 		}
 
-		_, err := NewProposal("prop_1", 1141424., 240, warranties, proponents)
+		sut := NewProposal("prop_1", 1141424., 240)
+		sut.AddWarranty(warranties[0])
+		sut.AddWarranty(warranties[1])
+		sut.AddProponent(proponents[0])
+		sut.AddProponent(proponents[1])
 
-		assert.ErrorIs(t, err, ErrMainProponentUnderage)
+		assert.ErrorIs(t, sut.SelfValidate(), ErrMainProponentUnderage)
 	})
 
 	t.Run("should return error when the main proponent income is less than the proposal installment", func(t *testing.T) {
@@ -69,9 +85,13 @@ func TestProposal_Proponent(t *testing.T) {
 			NewProponent("proponent_2", "prop_1", "Arlene Kassulke", 36, 48925.52, false),
 		}
 
-		_, err := NewProposal("prop_1", proposalPrice, 12, warranties, proponents)
+		sut := NewProposal("prop_1", proposalPrice, 12)
+		sut.AddWarranty(warranties[0])
+		sut.AddWarranty(warranties[1])
+		sut.AddProponent(proponents[0])
+		sut.AddProponent(proponents[1])
 
-		assert.ErrorIs(t, err, ErrMainProponentIncomeNotEnough)
+		assert.ErrorIs(t, sut.SelfValidate(), ErrMainProponentIncomeNotEnough)
 	})
 
 	t.Run("should return error when there are less than two proponents", func(t *testing.T) {
@@ -79,9 +99,12 @@ func TestProposal_Proponent(t *testing.T) {
 			NewProponent("proponent_1", "prop_1", "Ismael Streich Jr.", 42, 62615.64, true),
 		}
 
-		_, err := NewProposal("prop_1", 1141424., 240, warranties, proponents)
+		sut := NewProposal("prop_1", 1141424., 240)
+		sut.AddWarranty(warranties[0])
+		sut.AddWarranty(warranties[1])
+		sut.AddProponent(proponents[0])
 
-		assert.ErrorIs(t, err, ErrNotEnoughProponents)
+		assert.ErrorIs(t, sut.SelfValidate(), ErrNotEnoughProponents)
 	})
 }
 
@@ -97,8 +120,13 @@ func TestProposal_Warranties(t *testing.T) {
 			NewWarranty("warranty_2", "prop_1", 20.0, "PR"),
 		}
 
-		_, err := NewProposal("prop_1", 60.1, 240, warranties, proponents)
+		sut := NewProposal("prop_1", 60.1, 240)
 
-		assert.ErrorIs(t, err, ErrWarrantiesValueNotEnough)
+		sut.AddWarranty(warranties[0])
+		sut.AddWarranty(warranties[1])
+		sut.AddProponent(proponents[0])
+		sut.AddProponent(proponents[1])
+
+		assert.ErrorIs(t, sut.SelfValidate(), ErrWarrantiesValueNotEnough)
 	})
 }

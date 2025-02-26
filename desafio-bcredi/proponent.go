@@ -9,6 +9,7 @@ type Proponent struct {
 	isMain     bool
 }
 
+// TODO: define main proponent through a method
 func NewProponent(ID string, proposalID string, name string, age int, income float64, isMain bool) Proponent {
 	return Proponent{
 		ID:         ID,

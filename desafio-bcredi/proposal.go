@@ -21,23 +21,23 @@ type Proposal struct {
 	proponents       []Proponent
 }
 
-func NewProposal(id string, value float64, deadlineInMonths int, warranties []Warranty, proponents []Proponent) (Proposal, error) {
-	p := Proposal{
+func NewProposal(id string, requiredValue float64, deadlineInMonths int) Proposal {
+	return Proposal{
 		ID:               id,
-		warranties:       warranties,
-		requiredValue:    value,
+		requiredValue:    requiredValue,
 		deadlineInMonths: deadlineInMonths,
-		proponents:       proponents,
 	}
-
-	if err := p.selfValidate(); err != nil {
-		return Proposal{}, err
-	}
-
-	return p, nil
 }
 
-func (p *Proposal) selfValidate() error {
+func (p *Proposal) AddWarranty(warranty Warranty) {
+	p.warranties = append(p.warranties, warranty)
+}
+
+func (p *Proposal) AddProponent(proponent Proponent) {
+	p.proponents = append(p.proponents, proponent)
+}
+
+func (p *Proposal) SelfValidate() error {
 	mainProponentsCount := 0
 
 	for _, p := range p.Proponents() {
