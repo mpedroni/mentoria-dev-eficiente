@@ -37,50 +37,14 @@ func (p *Proposal) AddProponent(proponent Proponent) {
 	p.proponents = append(p.proponents, proponent)
 }
 
-func (p *Proposal) SelfValidate() error {
-	mainProponentsCount := 0
-
-	for _, p := range p.Proponents() {
-		if p.IsMain() {
-			mainProponentsCount++
-		}
-	}
-
-	if mainProponentsCount == 0 {
-		return ErrMainProponentNotFound
-	}
-
-	if mainProponentsCount > 1 {
-		return ErrInvalidNumberOfMainProponents
-	}
-
-	if p.MainProponent().Age() < 18 {
-		return ErrMainProponentUnderage
-	}
-
-	if p.MainProponent().MonthlyIncome() < p.Installment() {
-		return ErrMainProponentIncomeNotEnough
-	}
-
-	if len(p.Proponents()) < 2 {
-		return ErrNotEnoughProponents
-	}
-
-	if p.WarrantiesValue() < p.RequiredValue()*2 {
-		return ErrWarrantiesValueNotEnough
-	}
-
-	return nil
-}
-
 func (p *Proposal) MainProponent() Proponent {
-	for _, p := range p.Proponents() {
-		if p.IsMain() {
-			return p
+	for _, prop := range p.proponents {
+		if prop.IsMain() {
+			return prop
 		}
 	}
 
-	panic("main proponent not found")
+	return Proponent{}
 }
 
 func (p *Proposal) Installment() float64 {

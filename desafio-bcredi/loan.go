@@ -35,5 +35,37 @@ func NewLoan(proposal Proposal) (Loan, error) {
 }
 
 func (l *Loan) selfValidate() error {
-	return l.proposal.SelfValidate()
+	mainProponentsCount := 0
+
+	for _, prop := range l.proposal.Proponents() {
+		if prop.IsMain() {
+			mainProponentsCount++
+		}
+	}
+
+	if mainProponentsCount == 0 {
+		return ErrMainProponentNotFound
+	}
+
+	if mainProponentsCount > 1 {
+		return ErrInvalidNumberOfMainProponents
+	}
+
+	if l.proposal.MainProponent().Age() < 18 {
+		return ErrMainProponentUnderage
+	}
+
+	if l.proposal.MainProponent().MonthlyIncome() < l.proposal.Installment() {
+		return ErrMainProponentIncomeNotEnough
+	}
+
+	if len(l.proposal.Proponents()) < 2 {
+		return ErrNotEnoughProponents
+	}
+
+	if l.proposal.WarrantiesValue() < l.proposal.RequiredValue()*2 {
+		return ErrWarrantiesValueNotEnough
+	}
+
+	return nil
 }

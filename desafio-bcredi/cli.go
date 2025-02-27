@@ -18,7 +18,7 @@ func (c *CLI) Run() error {
 	}
 
 	for _, p := range proposals {
-		err := p.SelfValidate()
+		_, err := NewLoan(p)
 		if err != nil {
 			fmt.Println(p.ID, "is invalid:", err)
 		} else {
