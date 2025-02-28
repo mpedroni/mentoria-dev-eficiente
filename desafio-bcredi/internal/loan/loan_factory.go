@@ -1,4 +1,4 @@
-package main
+package loan
 
 func NewRegularLoan(p Proposal) (Loan, error) {
 	return NewCustomLoan(p,

@@ -1,4 +1,4 @@
-package main
+package loan
 
 type Warranty struct {
 	ID         string

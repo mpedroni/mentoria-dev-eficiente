@@ -1,4 +1,4 @@
-package main
+package loan
 
 type Loan struct {
 	proposal Proposal

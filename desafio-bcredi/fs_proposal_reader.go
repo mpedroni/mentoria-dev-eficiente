@@ -1,6 +1,7 @@
 package main
 
 import (
+	"desafio_bcredi/internal/loan"
 	"fmt"
 	"os"
 	"strconv"
@@ -31,7 +32,7 @@ const (
 )
 
 type ProposalReader interface {
-	Read() ([]Proposal, error)
+	Read() ([]loan.Proposal, error)
 }
 
 type fsProposalReader struct {
@@ -39,7 +40,7 @@ type fsProposalReader struct {
 }
 
 type ProposalReaderResponse struct {
-	Proposal
+	loan.Proposal
 	Err error
 }
 
@@ -52,8 +53,8 @@ func NewFileSystemProposalReader(filename string) (ProposalReader, error) {
 	return &fsProposalReader{content: string(content)}, nil
 }
 
-func (r *fsProposalReader) Read() ([]Proposal, error) {
-	proposals := make([]*Proposal, 0)
+func (r *fsProposalReader) Read() ([]loan.Proposal, error) {
+	proposals := make([]*loan.Proposal, 0)
 
 	for n, line := range strings.Split(r.content, "\n") {
 		fields := strings.Split(line, ",")
@@ -78,7 +79,7 @@ func (r *fsProposalReader) Read() ([]Proposal, error) {
 			}
 			deadlineInMonths := deadline
 
-			proposal := NewProposal(proposalID, requiredValue, deadlineInMonths)
+			proposal := loan.NewProposal(proposalID, requiredValue, deadlineInMonths)
 			proposals = append(
 				proposals,
 				&proposal,
@@ -98,7 +99,7 @@ func (r *fsProposalReader) Read() ([]Proposal, error) {
 			}
 
 			proposal := proposals[len(proposals)-1]
-			proposal.AddWarranty(NewWarranty(id, proposal.ID, price, province))
+			proposal.AddWarranty(loan.NewWarranty(id, proposal.ID, price, province))
 		case "proponent,added":
 			if len(proposals) == 0 {
 				return nil, fmt.Errorf("proponent added before proposal created at line: %v", n+1)
@@ -125,13 +126,13 @@ func (r *fsProposalReader) Read() ([]Proposal, error) {
 			}
 
 			proposal := proposals[len(proposals)-1]
-			proposal.AddProponent(NewProponent(id, proposal.ID, name, age, income, isMain))
+			proposal.AddProponent(loan.NewProponent(id, proposal.ID, name, age, income, isMain))
 		default:
 			return nil, fmt.Errorf("unknown event type: %s", eventType)
 		}
 	}
 
-	pp := make([]Proposal, len(proposals))
+	pp := make([]loan.Proposal, len(proposals))
 	for i, p := range proposals {
 		pp[i] = *p
 	}

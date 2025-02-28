@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"desafio_bcredi/internal/loan"
+	"fmt"
+)
 
 type CLI struct {
 	r ProposalReader
@@ -18,7 +21,7 @@ func (c *CLI) Run() error {
 	}
 
 	for _, p := range proposals {
-		_, err := NewRegularLoan(p)
+		_, err := loan.NewRegularLoan(p)
 		if err != nil {
 			fmt.Println(p.ID, "is invalid:", err)
 		} else {

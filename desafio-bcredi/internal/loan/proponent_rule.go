@@ -1,4 +1,4 @@
-package main
+package loan
 
 func HasMainProponent() LoanRule {
 	return func(p Proposal) error {
