@@ -1,4 +1,4 @@
-package main
+package proposalreader
 
 import (
 	"desafio_bcredi/internal/loan"

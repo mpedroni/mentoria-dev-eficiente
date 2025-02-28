@@ -1,7 +1,9 @@
 package main
 
+import "desafio_bcredi/internal/proposalreader"
+
 func main() {
-	fsProposalReader, err := NewFileSystemProposalReader("./proposals/example002.txt")
+	fsProposalReader, err := proposalreader.NewFileSystemProposalReader("./proposals/example002.txt")
 	if err != nil {
 		panic(err)
 	}

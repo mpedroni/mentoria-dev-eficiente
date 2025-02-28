@@ -1,4 +1,4 @@
-package main
+package proposalreader
 
 import (
 	"testing"
@@ -7,7 +7,7 @@ import (
 )
 
 func TestFsProposalReaderRead(t *testing.T) {
-	sut, err := NewFileSystemProposalReader("./proposals/example001.txt")
+	sut, err := NewFileSystemProposalReader("../../proposals/example001.txt")
 	assert.Nil(t, err)
 
 	t.Run("should return a list of proposals", func(t *testing.T) {
@@ -59,7 +59,7 @@ func TestFsProposalReaderRead(t *testing.T) {
 	})
 
 	t.Run("should handle files with more than one proposal", func(t *testing.T) {
-		sut, err := NewFileSystemProposalReader("./proposals/example002.txt")
+		sut, err := NewFileSystemProposalReader("../../proposals/example002.txt")
 		assert.Nil(t, err)
 
 		proposals, err := sut.Read()

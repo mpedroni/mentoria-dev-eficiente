@@ -2,14 +2,15 @@ package main
 
 import (
 	"desafio_bcredi/internal/loan"
+	"desafio_bcredi/internal/proposalreader"
 	"fmt"
 )
 
 type CLI struct {
-	r ProposalReader
+	r proposalreader.ProposalReader
 }
 
-func NewCLI(r ProposalReader) *CLI {
+func NewCLI(r proposalreader.ProposalReader) *CLI {
 	return &CLI{r}
 }
 
