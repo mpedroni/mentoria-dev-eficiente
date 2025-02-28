@@ -1,5 +1,14 @@
 package loan
 
+func WarrantiesValueEnough() LoanRule {
+	return func(p Proposal) error {
+		if p.WarrantiesValue() < p.RequiredValue()*2 {
+			return ErrWarrantiesValueNotEnough
+		}
+
+		return nil
+	}
+}
 func HasMainProponent() LoanRule {
 	return func(p Proposal) error {
 		if len(p.MainProponents()) == 0 {
