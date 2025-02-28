@@ -2,7 +2,7 @@ package main
 
 func HasMainProponent() LoanRule {
 	return func(p Proposal) error {
-		if p.MainProponent().ID == "" {
+		if len(p.MainProponents()) == 0 {
 			return ErrMainProponentNotFound
 		}
 
@@ -12,15 +12,7 @@ func HasMainProponent() LoanRule {
 
 func MainProponentsMax(max int) LoanRule {
 	return func(p Proposal) error {
-		mainProponentsCount := 0
-
-		for _, prop := range p.Proponents() {
-			if prop.IsMain() {
-				mainProponentsCount++
-			}
-		}
-
-		if mainProponentsCount > max {
+		if len(p.MainProponents()) > max {
 			return ErrTooMuchMainProponents
 		}
 

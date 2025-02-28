@@ -38,6 +38,8 @@ func (p *Proposal) AddProponent(proponent Proponent) {
 	p.proponents = append(p.proponents, proponent)
 }
 
+// TODO: a proposal itself can have many or none main proponents, so maybe this method makes sense in Loan only
+// probably it will imply receiving the Loan directly instead of the proposal in loan rules
 func (p *Proposal) MainProponent() Proponent {
 	for _, prop := range p.proponents {
 		if prop.IsMain() {
@@ -76,4 +78,16 @@ func (p *Proposal) Warranties() []Warranty {
 
 func (p *Proposal) Proponents() []Proponent {
 	return p.proponents
+}
+
+func (p *Proposal) MainProponents() []Proponent {
+	var mainProponents []Proponent
+
+	for _, prop := range p.Proponents() {
+		if prop.IsMain() {
+			mainProponents = append(mainProponents, prop)
+		}
+	}
+
+	return mainProponents
 }
