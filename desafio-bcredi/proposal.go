@@ -5,12 +5,13 @@ import (
 )
 
 var (
-	ErrMainProponentNotFound         = errors.New("a proposal must have a main proponent")
-	ErrInvalidNumberOfMainProponents = errors.New("a proposal must have only one main proponent")
-	ErrMainProponentUnderage         = errors.New("the main proponent must be at least 18 years old")
-	ErrMainProponentIncomeNotEnough  = errors.New("the main proponent income must be enough to pay the proposal installment")
-	ErrNotEnoughProponents           = errors.New("a proposal must have at least two proponents")
-	ErrWarrantiesValueNotEnough      = errors.New("the warranties value must be at least twice the proposal value")
+	// TODO: maybe now makes sense keep these validation errors closer to the rule definitions
+	ErrMainProponentNotFound        = errors.New("a proposal must have a main proponent")
+	ErrTooMuchMainProponents        = errors.New("a proposal must have only one main proponent")
+	ErrMainProponentUnderage        = errors.New("the main proponent must be at least 18 years old")
+	ErrMainProponentIncomeNotEnough = errors.New("the main proponent income must be enough to pay the proposal installment")
+	ErrNotEnoughProponents          = errors.New("a proposal must have at least two proponents")
+	ErrWarrantiesValueNotEnough     = errors.New("the warranties value must be at least twice the proposal value")
 )
 
 type Proposal struct {

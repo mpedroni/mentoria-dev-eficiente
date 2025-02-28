@@ -65,7 +65,7 @@ func TestLoan_Proponent(t *testing.T) {
 
 		_, err := NewLoan(proposal)
 
-		assert.ErrorIs(t, err, ErrInvalidNumberOfMainProponents)
+		assert.ErrorIs(t, err, ErrTooMuchMainProponents)
 	})
 
 	t.Run("should return error when the main proponent is underage", func(t *testing.T) {
