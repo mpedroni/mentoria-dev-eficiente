@@ -31,17 +31,8 @@ const (
 	ProponentIsMain = 9
 )
 
-type ProposalReader interface {
-	Read() ([]loan.Proposal, error)
-}
-
 type fsProposalReader struct {
 	content string
-}
-
-type ProposalReaderResponse struct {
-	loan.Proposal
-	Err error
 }
 
 func NewFileSystemProposalReader(filename string) (ProposalReader, error) {
