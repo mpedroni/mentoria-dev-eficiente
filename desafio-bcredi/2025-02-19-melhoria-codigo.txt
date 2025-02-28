@@ -10,5 +10,9 @@ https://github.com/dead-parrot/BCredi-challenge/blob/master/BCredi/Entities/Loan
     ? se não tiver um proponente principal, retorna erro? (a ordem das validações faria diferença)
   - quantidade de proponentes
 
-- no construtor o Loan, receber a proposal e uma lista de options. Cada option recebe a proposal e retorna um erro. 
-  - 
+- OK no construtor do Loan, receber a proposal e uma lista de options. Cada option recebe a proposal e retorna um erro. 
+
+- improvements
+  - testes individuais para cada rule (remover do arquivo de testes do loan)
+  - teste para validar que a aplicação de rules no loan funciona
+  - teste para validar que todas as regras do regular loan estão sendo aplicadas
