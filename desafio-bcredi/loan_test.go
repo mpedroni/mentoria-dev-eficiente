@@ -24,7 +24,7 @@ func TestLoan_Proponent(t *testing.T) {
 		proposal.AddProponent(proponents[0])
 		proposal.AddProponent(proponents[1])
 
-		sut, err := NewLoan(proposal)
+		sut, err := NewRegularLoan(proposal)
 
 		assert.Nil(t, err)
 		assert.Equal(t, "prop_1", sut.ProposalID())
@@ -46,7 +46,7 @@ func TestLoan_Proponent(t *testing.T) {
 		proposal.AddProponent(proponents[0])
 		proposal.AddProponent(proponents[1])
 
-		_, err := NewLoan(proposal)
+		_, err := NewRegularLoan(proposal)
 
 		assert.ErrorIs(t, err, ErrMainProponentNotFound)
 	})
@@ -63,7 +63,7 @@ func TestLoan_Proponent(t *testing.T) {
 		proposal.AddProponent(proponents[0])
 		proposal.AddProponent(proponents[1])
 
-		_, err := NewLoan(proposal)
+		_, err := NewRegularLoan(proposal)
 
 		assert.ErrorIs(t, err, ErrTooMuchMainProponents)
 	})
@@ -80,7 +80,7 @@ func TestLoan_Proponent(t *testing.T) {
 		proposal.AddProponent(proponents[0])
 		proposal.AddProponent(proponents[1])
 
-		_, err := NewLoan(proposal)
+		_, err := NewRegularLoan(proposal)
 
 		assert.ErrorIs(t, err, ErrMainProponentUnderage)
 	})
@@ -99,7 +99,7 @@ func TestLoan_Proponent(t *testing.T) {
 		proposal.AddProponent(proponents[0])
 		proposal.AddProponent(proponents[1])
 
-		_, err := NewLoan(proposal)
+		_, err := NewRegularLoan(proposal)
 
 		assert.ErrorIs(t, err, ErrMainProponentIncomeNotEnough)
 	})
@@ -114,7 +114,7 @@ func TestLoan_Proponent(t *testing.T) {
 		proposal.AddWarranty(warranties[1])
 		proposal.AddProponent(proponents[0])
 
-		_, err := NewLoan(proposal)
+		_, err := NewRegularLoan(proposal)
 
 		assert.ErrorIs(t, err, ErrNotEnoughProponents)
 	})
@@ -138,7 +138,7 @@ func TestLoan_Warranties(t *testing.T) {
 		proposal.AddProponent(proponents[0])
 		proposal.AddProponent(proponents[1])
 
-		_, err := NewLoan(proposal)
+		_, err := NewRegularLoan(proposal)
 
 		assert.ErrorIs(t, err, ErrWarrantiesValueNotEnough)
 	})
